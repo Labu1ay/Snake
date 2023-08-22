@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour {
-    [SerializeField] private Snake _snake;
     [SerializeField] private Transform _cursor;
-    private Camera _cameraMain;
+    private Camera _cameraMain;                
+    private Snake _snake;
     private Plane _plane;
-    private void Awake() {
+    public void Init(Snake snake) {
+        _snake = snake;
         _cameraMain = Camera.main;
         _plane = new Plane(Vector3.up, Vector3.zero);
     }
