@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +23,7 @@ public class Tail : MonoBehaviour {
     }
 
     private void SetDetailCount(int detailCount) {
-        if(detailCount == _details.Count + 1) return;
+        if(detailCount == _details.Count - 1) return;
         int diff = (_details.Count - 1) - detailCount;
         if (diff < 1) {
             for (int i = 0; i < -diff; i++) {
