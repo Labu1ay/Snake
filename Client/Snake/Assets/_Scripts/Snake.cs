@@ -18,30 +18,28 @@ public class Snake : MonoBehaviour {
         _tail.Destroy();
         Destroy(gameObject);
     }
-    
+
     private void Update() {
         Rotate();
         Move();
     }
-    private void Rotate(){
+
+    private void Rotate() {
         Quaternion targetRotation = Quaternion.LookRotation(_targetDirection);
         _head.rotation = Quaternion.RotateTowards(_head.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
-        /* float diffY = _directionPoint.eulerAngles.y - _head.eulerAngles.y;
-
-        if(diffY > 180) diffY = (diffY - 180) * -1;
-        else if(diffY < -180) diffY = (diffY + 180) * -1;
-
-        float maxAngle = Time.deltaTime * _rotateSpeed;
-        float rotateY = Mathf.Clamp(diffY, -maxAngle, maxAngle);
-
-        _head.Rotate(0, rotateY, 0); */
     }
-    private void Move(){
+
+    private void Move() {
         transform.position += _head.forward * Time.deltaTime * _speed;
     }
+
     private Vector3 _targetDirection = Vector3.zero;
-    public void LookAt(Vector3 cursorPosition){
+
+    public void LookAt(Vector3 cursorPosition) {
         _targetDirection = cursorPosition - _head.position;
-        //_directionPoint.LookAt(cursorPosition);
+    }
+
+    public void GetMoveInfo(out Vector3 position) {
+        position = transform.position;
     }
 }
