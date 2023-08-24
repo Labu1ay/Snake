@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour {
     private Transform camera;
-    private void Start() {
+    public void Init(float offsetY) {
          camera = Camera.main.transform;
         camera.parent = transform;
-        camera.localPosition = Vector3.zero;
+        camera.localPosition = Vector3.up * offsetY;
     }
 
     private void OnDestroy() {
