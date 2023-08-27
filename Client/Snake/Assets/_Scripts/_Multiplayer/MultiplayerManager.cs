@@ -50,14 +50,13 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
         Quaternion rotation = Quaternion.identity;
         
         Snake snake = Instantiate(_snakePrefab, position, rotation);
-        snake.Init(player.d);
+        snake.Init(player.d, player.clr);
 
         PlayerAim aim = Instantiate(_playerAim, position, rotation);
         aim.Init(snake.Speed);
         
         Controller controller = Instantiate(_controllerPrefab);
         controller.Init(aim, player, snake);
-        
     }
 #endregion
     
@@ -66,8 +65,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
     private void CreateEnemy(string key, Player player) {
         Vector3 position = new Vector3(player.x, 0,  player.z);
         Snake snake = Instantiate(_snakePrefab, position, Quaternion.identity);
-        snake.Init(player.d);
-
+        snake.Init(player.d, player.clr);
+        
         EnemyController enemy = snake.AddComponent<EnemyController>();
         enemy.Init(player, snake);
         

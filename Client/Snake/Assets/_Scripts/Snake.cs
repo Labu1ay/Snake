@@ -11,9 +11,11 @@ public class Snake : MonoBehaviour {
 
     private Tail _tail;
 
-    public void Init(int detailCount) {
+    public void Init(int detailCount, byte color) {
+        GetComponent<SetSkin>().SetMaterial(color);
+        
         _tail = Instantiate(_tailPrefab, transform.position, Quaternion.identity);
-        _tail.Init(_head, _speed, detailCount);
+        _tail.Init(_head, _speed, detailCount, color);
     }
 
     public void SetDetailCount(int detailCount) => _tail.SetDetailCount(detailCount);

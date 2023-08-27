@@ -12,6 +12,7 @@ public class Controller : MonoBehaviour {
     private Camera _cameraMain;                
     private Snake _snake;
     private Plane _plane;
+    
     public void Init(PlayerAim aim, Player player, Snake snake) {
         _multiplayerManager = MultiplayerManager.Instance;
         _playerAim = aim;
@@ -33,7 +34,7 @@ public class Controller : MonoBehaviour {
 
         SendMove();
     }
-
+    
     private void SendMove() {
         _playerAim.GetMoveInfo(out Vector3 position);
         Dictionary<string, object> data = new Dictionary<string, object>() {

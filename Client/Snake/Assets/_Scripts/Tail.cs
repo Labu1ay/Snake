@@ -10,10 +10,15 @@ public class Tail : MonoBehaviour {
     private List<Transform> _details = new List<Transform>();
     private List<Vector3> _positionHistory = new List<Vector3>();
     private List<Quaternion> _rotationHistory = new List<Quaternion>();
+
+    private byte _color;
     
-    public void Init(Transform head, float speed, int detailCount) {
+    public void Init(Transform head, float speed, int detailCount, byte color) {
         _snakeSpeed = speed;
         _head = head;
+        _color = color;
+        
+        GetComponent<SetSkin>().SetMaterial(_color);
         
         _details.Add(transform);
         _positionHistory.Add(_head.position);
@@ -45,6 +50,7 @@ public class Tail : MonoBehaviour {
         Vector3 position = _details[_details.Count - 1].position;
         Quaternion rotation = _details[_details.Count - 1].rotation;
         Transform detail = Instantiate(_detailPrefab, position, rotation);
+        detail.GetComponent<SetSkin>().SetMaterial(_color);
         _details.Insert(0, detail);
         _positionHistory.Add(position);
         _rotationHistory.Add(rotation);
