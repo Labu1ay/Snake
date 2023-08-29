@@ -5,7 +5,7 @@ export class Player extends Schema {
     @type("number") x = Math.floor(Math.random() * 256) -128;
     @type("number") z = Math.floor(Math.random() * 256) -128;
     @type("uint8") d = 2;
-    @type("uint8") clr = Math.floor(Math.random() * 6);
+    @type("uint8") clr = 0;
 }
 
 export class State extends Schema {
@@ -14,8 +14,9 @@ export class State extends Schema {
 
     something = "This attribute won't be sent to the client-side";
 
-    createPlayer(sessionId: string) {
+    createPlayer(sessionId: string, data: any) {
         this.players.set(sessionId, new Player());
+        this.players.get(sessionId).clr = Math.floor(Math.random() * data.skin);  
     }
 
     removePlayer(sessionId: string) {
@@ -45,8 +46,8 @@ export class StateHandlerRoom extends Room<State> {
         return true;
     }
 
-    onJoin (client: Client) {
-        this.state.createPlayer(client.sessionId);
+    onJoin (client: Client, data: any) {
+        this.state.createPlayer(client.sessionId, data);
     }
 
     onLeave (client) {

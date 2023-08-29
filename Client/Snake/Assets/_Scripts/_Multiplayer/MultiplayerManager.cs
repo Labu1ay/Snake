@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Colyseus;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
@@ -15,7 +14,11 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
     }
 
     private async void Connection() {
-        _room = await client.JoinOrCreate<State>(GameRoomName);
+        
+        Dictionary<string, object> data = new Dictionary<string, object>(){
+            { "skin", Skins.Instance.GetLength() }
+        };
+        _room = await Instance.client.JoinOrCreate<State>(GameRoomName, data);
         _room.OnStateChange += OnChange;
     }
 
@@ -67,7 +70,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
         Snake snake = Instantiate(_snakePrefab, position, Quaternion.identity);
         snake.Init(player.d, player.clr);
         
-        EnemyController enemy = snake.AddComponent<EnemyController>();
+        EnemyController enemy = snake.gameObject.AddComponent<EnemyController>();
         enemy.Init(player, snake);
         
         _enemies.Add(key, enemy);

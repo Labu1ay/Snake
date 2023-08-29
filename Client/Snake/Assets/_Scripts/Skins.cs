@@ -3,7 +3,7 @@ using UnityEngine;
 public class Skins : MonoBehaviour {
     public static Skins Instance;
 
-    [SerializeField] private Material[] _Materials;
+    [SerializeField] private Material[] _materials;
 
     private void Awake() {
         if (Instance == null) {
@@ -15,6 +15,8 @@ public class Skins : MonoBehaviour {
         }
     }
 
-    public Material GetMaterial(byte index) => _Materials[index];
+    public byte GetLength() => (byte) _materials.Length;
+    
+    public Material GetMaterial(byte index) => _materials[index];
     
 }

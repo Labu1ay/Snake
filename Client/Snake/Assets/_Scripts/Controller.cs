@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Colyseus.Schema;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Controller : MonoBehaviour {
@@ -22,7 +21,7 @@ public class Controller : MonoBehaviour {
         _cameraMain = Camera.main;
         _plane = new Plane(Vector3.up, Vector3.zero);
         
-        _snake.AddComponent<CameraManager>().Init(_cameraOffsetY);
+        _snake.gameObject.AddComponent<CameraManager>().Init(_cameraOffsetY);
 
         _player.OnChange += OnChange;
     }

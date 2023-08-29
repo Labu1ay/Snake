@@ -6642,7 +6642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189e9539534c29a4f95ca5954b3498f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Materials:
+  _materials:
   - {fileID: 2100000, guid: e52bc2c51c885424585d9d99b721ce4c, type: 2}
   - {fileID: 2100000, guid: fb5c3b5a009c07b448767adf69768193, type: 2}
   - {fileID: 2100000, guid: b5c52902e33db8347bbb7f2c173315ec, type: 2}
