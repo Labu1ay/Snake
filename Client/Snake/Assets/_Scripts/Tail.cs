@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,12 +12,28 @@ public class Tail : MonoBehaviour {
     private List<Vector3> _positionHistory = new List<Vector3>();
     private List<Quaternion> _rotationHistory = new List<Quaternion>();
 
+    private int _playerLayer;
+    private bool _isPlayer;
+
     private byte _color;
     
-    public void Init(Transform head, float speed, int detailCount, byte color) {
+    private void SetPlayerLayer(GameObject gameObject) {
+        gameObject.layer = _playerLayer;
+            
+        var childrens = GetComponentsInChildren<Transform>();
+        foreach (var children in childrens) {
+            children.gameObject.layer = _playerLayer;
+        }
+    }
+    
+    public void Init(Transform head, float speed, int detailCount, byte color, int playerLayer, bool isPlayer) {
         _snakeSpeed = speed;
         _head = head;
         _color = color;
+        _playerLayer = playerLayer;
+        _isPlayer = isPlayer;
+        
+        if (_isPlayer) SetPlayerLayer(gameObject);
         
         GetComponent<SetSkin>().SetMaterial(_color);
         
@@ -51,6 +68,7 @@ public class Tail : MonoBehaviour {
         Quaternion rotation = _details[_details.Count - 1].rotation;
         Transform detail = Instantiate(_detailPrefab, position, rotation);
         detail.GetComponent<SetSkin>().SetMaterial(_color);
+        if(_isPlayer) SetPlayerLayer(detail.gameObject);
         _details.Insert(0, detail);
         _positionHistory.Add(position);
         _rotationHistory.Add(rotation);
@@ -92,9 +110,36 @@ public class Tail : MonoBehaviour {
         }
     }
     
+    public DetailPositions GetDetailPositions() {
+        DetailPosition[] detailPosition = new DetailPosition[_details.Count];
+        for (int i = 0; i < _details.Count; i++) {
+            detailPosition[i] = new DetailPosition() {
+                x = _details[i].position.x,
+                z = _details[i].position.z
+            };
+        };
+        
+        DetailPositions detailPositions = new DetailPositions {
+            ds = detailPosition
+        };
+        
+        return detailPositions;
+    }
+    
     public void Destroy() {
         for (int i = 0; i < _details.Count; i++) {
             Destroy(_details[i].gameObject);
         }
     }
+    
+}
+[Serializable]
+public struct DetailPosition {
+    public float x;
+    public float z;
+}
+[Serializable]
+public struct DetailPositions {
+    public string id;
+    public DetailPosition[] ds;
 }

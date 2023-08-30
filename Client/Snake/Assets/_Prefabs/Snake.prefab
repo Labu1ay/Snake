@@ -57,10 +57,11 @@ GameObject:
   - component: {fileID: 8392969918760376645}
   - component: {fileID: 8392969918760376644}
   - component: {fileID: 115686243406461209}
+  - component: {fileID: 6359275854549989191}
   m_Layer: 0
   m_Name: Snake
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -77,7 +78,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8392969918612091710}
-  - {fileID: 8392969918988139180}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -93,8 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbae6df45fcc4b429acf5726aafa659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerLayer: 6
   _tailPrefab: {fileID: 1255515960293343528, guid: 423893b5e4fe6b046b72b78a6b328ac8, type: 3}
-  _head: {fileID: 8392969918612091710}
+  <Head>k__BackingField: {fileID: 8392969918612091710}
   _speed: 6
 --- !u!114 &115686243406461209
 MonoBehaviour:
@@ -115,37 +116,19 @@ MonoBehaviour:
   - {fileID: 5108493536023457648}
   - {fileID: 4486162158026960190}
   - {fileID: 2235787950451640506}
---- !u!1 &8392969918988139179
-GameObject:
+--- !u!114 &6359275854549989191
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8392969918988139180}
-  m_Layer: 0
-  m_Name: DirectionPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8392969918988139180
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8392969918988139179}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8392969918760376645}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 8392969918760376643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961cdf059f4316340a3d4c34a25325b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deathParticle: {fileID: 6337447475170569117, guid: f18bc8e86746677419b9e0340a6aa844, type: 3}
 --- !u!1001 &5333694391745322047
 PrefabInstance:
   m_ObjectHideFlags: 0

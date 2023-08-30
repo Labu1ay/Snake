@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Colyseus.Schema;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Controller : MonoBehaviour {
     [SerializeField] private Transform _cursor;
@@ -8,20 +9,23 @@ public class Controller : MonoBehaviour {
     private MultiplayerManager _multiplayerManager;
     private PlayerAim _playerAim;
     private Player _player;
+    private string _clientID;
     private Camera _cameraMain;                
     private Snake _snake;
     private Plane _plane;
     
-    public void Init(PlayerAim aim, Player player, Snake snake) {
+    public void Init(string clientID, PlayerAim aim, Player player, Snake snake) {
         _multiplayerManager = MultiplayerManager.Instance;
         _playerAim = aim;
         _player = player;
+        _clientID = clientID;
         _snake = snake;
         
         _cameraMain = Camera.main;
         _plane = new Plane(Vector3.up, Vector3.zero);
         
-        _snake.gameObject.AddComponent<CameraManager>().Init(_cameraOffsetY);
+        _cameraMain.transform.parent = _snake.transform;
+        _cameraMain.transform.localPosition = Vector3.up * _cameraOffsetY;
 
         _player.OnChange += OnChange;
     }
@@ -72,7 +76,10 @@ public class Controller : MonoBehaviour {
     }
 
     public void Destroy() {
-        _player.OnChange -= OnChange;
-        _snake.Destroy();
+        _cameraMain.transform.parent = null;
+        
+        if(_player != null) _player.OnChange -= OnChange;
+        _snake.Destroy(_clientID);
+        Destroy(gameObject);
     }
 }

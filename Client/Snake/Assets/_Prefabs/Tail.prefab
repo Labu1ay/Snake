@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1255515960293343528}
   - component: {fileID: 3631274591989379191}
   - component: {fileID: 5697691713551104425}
+  - component: {fileID: 4129856395641712515}
   m_Layer: 0
   m_Name: Tail
   m_TagString: Untagged
@@ -76,6 +77,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshRenderers:
   - {fileID: 8281729989933600837}
+--- !u!114 &4129856395641712515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255515960293343531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961cdf059f4316340a3d4c34a25325b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deathParticle: {fileID: 6337447475170569117, guid: f18bc8e86746677419b9e0340a6aa844, type: 3}
 --- !u!1001 &3626840222859116474
 PrefabInstance:
   m_ObjectHideFlags: 0

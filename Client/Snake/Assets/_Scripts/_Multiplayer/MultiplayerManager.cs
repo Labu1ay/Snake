@@ -33,8 +33,12 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
         
         _room.State.players.OnAdd += CreateEnemy;
         _room.State.players.OnRemove += RemoveEnemy;
-    }
 
+        _room.State.apples.ForEach(CreateApple);
+        _room.State.apples.OnAdd += (key, apple) => CreateApple(apple);
+        _room.State.apples.OnRemove += (key, apple) => RemoveApple(apple);
+    }
+    
     protected override void OnApplicationQuit() {
         base.OnApplicationQuit();
         LeaveRoom();
@@ -42,6 +46,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
     public void LeaveRoom() => _room?.Leave();
 
     public void SendMessage(string key, Dictionary<string, object> data) => _room.Send(key, data);
+    public void SendMessage(string key, string data) => _room.Send(key, data);
 #endregion
     
 #region Player
@@ -53,13 +58,13 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
         Quaternion rotation = Quaternion.identity;
         
         Snake snake = Instantiate(_snakePrefab, position, rotation);
-        snake.Init(player.d, player.clr);
+        snake.Init(player.d, player.clr, true);
 
         PlayerAim aim = Instantiate(_playerAim, position, rotation);
-        aim.Init(snake.Speed);
+        aim.Init(snake.Head, snake.Speed);
         
         Controller controller = Instantiate(_controllerPrefab);
-        controller.Init(aim, player, snake);
+        controller.Init(_room.SessionId, aim, player, snake);
     }
 #endregion
     
@@ -71,7 +76,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
         snake.Init(player.d, player.clr);
         
         EnemyController enemy = snake.gameObject.AddComponent<EnemyController>();
-        enemy.Init(player, snake);
+        enemy.Init(key, player, snake);
         
         _enemies.Add(key, enemy);
     }
@@ -84,6 +89,30 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager> {
         EnemyController enemy = _enemies[key];
         _enemies.Remove(key);
         enemy.Destroy();
+    }
+#endregion
+
+#region Apple
+    [SerializeField] private Apple _applePrefab;
+    private Dictionary<Vector2Float, Apple> _apples = new Dictionary<Vector2Float, Apple>();
+    
+    private void CreateApple(Vector2Float vector2Float) {
+        Vector3 position = new Vector3(vector2Float.x, 0, vector2Float.z);
+        
+        Apple apple = Instantiate(_applePrefab, position, Quaternion.identity);
+        apple.Init(vector2Float);
+        
+        _apples.Add(vector2Float, apple);
+    }
+    
+    private void RemoveApple(Vector2Float vector2Float) {
+        if (_apples.ContainsKey(vector2Float) == false) return;
+
+        Apple apple = _apples[vector2Float];
+        _apples.Remove(vector2Float);
+
+        apple.Destroy();
+
     }
 #endregion
 }
