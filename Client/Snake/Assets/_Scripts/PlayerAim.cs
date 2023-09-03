@@ -9,7 +9,6 @@ public class PlayerAim : MonoBehaviour {
     private Vector3 _targetDirection = Vector3.zero;
     private float _speed;
     
-
     public void Init(Transform snakeHead, float speed) {
         _snakeHead = snakeHead;
         _speed = speed;
@@ -69,10 +68,4 @@ public class PlayerAim : MonoBehaviour {
     public void GetMoveInfo(out Vector3 position) {
         position = transform.position;
     }
-    
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected() {
-        Gizmos.DrawSphere(_snakeHead.position, _overlapRadius);
-    }
-#endif
 }

@@ -10,10 +10,14 @@ public class Snake : MonoBehaviour {
     [SerializeField] private Tail _tailPrefab;
     [field:SerializeField] public Transform Head { get; private set; }
     [SerializeField] private float _speed = 2f;
+    
+    [SerializeField] private Transform _nicknameTargetPoint;
+    [SerializeField] private Nickname _nicknamePrefab;
+    private Nickname _nickname;
 
     private Tail _tail;
 
-    public void Init(int detailCount, byte color, bool isPlayer = false) {
+    public void Init(int detailCount, byte color,string playerLogin, bool isPlayer = false) {
         if (isPlayer) {
             gameObject.layer = _playerLayer;
             
@@ -22,6 +26,9 @@ public class Snake : MonoBehaviour {
                 children.gameObject.layer = _playerLayer;
             }
         }
+        
+        _nickname = Instantiate(_nicknamePrefab, _nicknamePrefab.transform.position, Quaternion.identity);
+        _nickname.Init(_nicknameTargetPoint, playerLogin);
         
         GetComponent<SetSkin>().SetMaterial(color);
         
@@ -40,6 +47,7 @@ public class Snake : MonoBehaviour {
         MultiplayerManager.Instance.SendMessage("gameOver", json);
         
         _tail.Destroy();
+        _nickname.Destroy();
         Destroy(gameObject);
     }
 

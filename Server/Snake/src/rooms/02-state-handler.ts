@@ -9,6 +9,7 @@ export class Vector2Float extends Schema {
 }
 
 export class Player extends Schema {
+    @type("string") login = "";
     @type("number") x = Math.floor(Math.random() * 256) -128;
     @type("number") z = Math.floor(Math.random() * 256) -128;
     @type("uint8") d = 2;
@@ -42,7 +43,10 @@ export class State extends Schema {
     }
 
     createPlayer(sessionId: string, data: any) {
-        this.players.set(sessionId, new Player());
+        const player = new Player();
+        player.login = data.login;
+
+        this.players.set(sessionId, player);
         this.players.get(sessionId).clr = Math.floor(Math.random() * data.skin);  
     }
 
@@ -88,7 +92,7 @@ export class State extends Schema {
 
 export class StateHandlerRoom extends Room<State> {
     maxClients = 40;
-    startAppleCount = 500;
+    startAppleCount = 100;
 
     onCreate (options) {
 
